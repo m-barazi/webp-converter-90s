@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Photo to WebP Converter — 100% Offline</title>
+  <meta name="description" content="JPG, PNG, GIF, BMP, TIFF, HEIC, AVIF, SVG und WebP kostenlos in WebP umwandeln. Deine Bilder bleiben auf deinem Gerät." />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/utif@3.1.0/UTIF.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.js"></script>
+
+  <!-- 90s Design System -->
+  <link rel="stylesheet" href="css/90s.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            body: ['"MS Sans Serif"', '"Segoe UI"', 'Tahoma', 'Geneva', 'Verdana', 'sans-serif'],
+            heading: ['"Arial Black"', 'Impact', 'Haettenschweiler', 'sans-serif'],
+            mono: ['"Courier New"', 'Courier', 'monospace'],
+            fun: ['"Comic Sans MS"', 'cursive'],
+          },
+          colors: {
+            win95: {
+              bg: '#C0C0C0',
+              fg: '#000000',
+              muted: '#808080',
+              accent: '#0000FF',
+              secondary: '#FF0000',
+              tertiary: '#FFFF00',
+              success: '#00FF00',
+              successDark: '#00AA00',
+              border: '#000000',
+              borderLight: '#FFFFFF',
+              borderDark: '#808080',
+              titleBar: '#000080',
+              titleBarEnd: '#1084D0',
+              panelYellow: '#FFFFCC',
+              visited: '#800080',
+              hover: '#FF0000',
+              darkShadow: '#404040',
+              lightShadow: '#DFDFDF',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-body text-black bg-90s-tile min-h-screen">
+
+  <!-- Marquee Announcement Bar -->
+  <div class="bg-[#000080] text-white py-1 overflow-hidden border-b-2 border-black">
+    <div class="marquee whitespace-nowrap font-mono text-xs uppercase tracking-wide">
+      <span class="text-[#ffff00] mx-4">★ NEU!</span>
+      <span class="text-[#00ff00] mx-4">JETZT AUCH HEIC, AVIF & TIFF</span>
+      <span class="text-[#ff0000] mx-4">100% OFFLINE — KEIN UPLOAD</span>
+      <span class="text-[#00ffff] mx-4">Windows 95 STYLE</span>
+      <span class="text-[#ffff00] mx-4">★ KOSTENLOS</span>
+      <span class="text-[#ff00ff] mx-4">BMP GIF JPG PNG SVG WEBP</span>
+    </div>
+  </div>
+
+  <!-- Decorative Color Squares -->
+  <div class="flex justify-center gap-1 py-2 bg-[#c0c0c0] border-b-2 border-[#808080]">
+    <div class="w-6 h-6 bg-[#ff0000] border-2 border-black" title="RED"></div>
+    <div class="w-6 h-6 bg-[#00ff00] border-2 border-black" title="GREEN"></div>
+    <div class="w-6 h-6 bg-[#0000ff] border-2 border-black" title="BLUE"></div>
+    <div class="w-6 h-6 bg-[#ffff00] border-2 border-black" title="YELLOW"></div>
+    <div class="w-6 h-6 bg-[#ff00ff] border-2 border-black" title="MAGENTA"></div>
+    <div class="w-6 h-6 bg-[#00ffff] border-2 border-black" title="CYAN"></div>
+  </div>
+
+  <main class="max-w-5xl mx-auto px-4 py-8">
+
+    <!-- Hero Section -->
+    <section class="text-center mb-8">
+      <h1 class="font-heading text-4xl md:text-6xl uppercase tracking-tight text-rainbow mb-2 drop-shadow-hard">
+        Photo to WebP Converter
+      </h1>
+      <p class="text-sm md:text-base font-bold max-w-2xl mx-auto leading-relaxed">
+        JPG, JPEG, PNG, GIF, BMP, TIFF, HEIC, AVIF, SVG und WebP schnell und kostenlos in WebP umwandeln.
+      </p>
+      <div class="mt-4 inline-block px-3 py-1 bg-[#ffff00] border-2 border-black font-mono text-xs uppercase animate-pulse-glow">
+        ★ Deine Bilder bleiben auf deinem Gerät ★
+      </div>
+    </section>
+
+    <!-- Privacy Panel -->
+    <section class="window-panel mb-6">
+      <div class="title-bar px-3 py-1">
+        <span class="font-heading text-sm text-white">DATENSCHUTZ</span>
+      </div>
+      <div class="p-4 bg-white inset-panel">
+        <p class="font-bold text-center text-sm md:text-base">
+          🔒 Deine Bilder bleiben auf deinem Gerät und werden nicht hochgeladen.
+          <br class="hidden md:inline" />
+          Die gesamte Konvertierung findet <span class="text-[#0000ff] underline">lokal in deinem Browser</span> statt.
+        </p>
+      </div>
+    </section>
+
+    <!-- Upload Section -->
+    <section class="window-panel mb-6">
+      <div class="title-bar px-3 py-1 flex justify-between items-center">
+        <span class="font-heading text-sm text-white">UPLOAD</span>
+        <span class="text-white font-mono text-xs">[*]</span>
+      </div>
+      <div class="p-4 bg-[#c0c0c0]">
+        <div
+          id="drop-zone"
+          class="drop-zone bg-[#ffffcc] p-8 text-center cursor-pointer select-none transition-none"
+          role="button"
+          tabindex="0"
+          aria-label="Bilder per Drag und Drop hochladen oder auswählen"
+        >
+          <div class="font-heading text-2xl md:text-3xl uppercase mb-3">Bilder hierher ziehen</div>
+          <div class="font-bold mb-3">— ODER —</div>
+          <button
+            id="select-files-btn"
+            type="button"
+            class="bevel-button font-heading text-sm uppercase tracking-wide px-6 py-2"
+          >
+            Fotos auswählen
+          </button>
+          <input
+            type="file"
+            id="file-input"
+            multiple
+            accept="image/*,.heic,.heif,.tif,.tiff,.avif"
+            class="hidden"
+          />
+          <p class="mt-4 font-mono text-xs text-[#808080]">
+            Unterstützt: JPG, JPEG, PNG, GIF, BMP, TIFF, HEIC, HEIF, AVIF, SVG, WebP
+          </p>
+        </div>
+
+        <!-- File List -->
+        <div id="file-list" class="mt-4 space-y-2 hidden">
+          <div class="flex justify-between items-center px-2 py-1 bg-[#000080] text-white">
+            <span class="font-heading text-xs uppercase">Ausgewählte Bilder</span>
+            <button id="clear-all-btn" type="button" class="text-xs underline hover:text-[#ff0000]">Alle entfernen</button>
+          </div>
+          <div id="file-items" class="inset-panel bg-white max-h-80 overflow-y-auto p-2 space-y-2"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Settings Section -->
+    <section class="window-panel mb-6">
+      <div class="title-bar px-3 py-1">
+        <span class="font-heading text-sm text-white">EINSTELLUNGEN</span>
+      </div>
+      <div class="p-4 bg-[#c0c0c0] space-y-4">
+        <!-- Quality -->
+        <div class="bg-white p-3 border-2 border-black">
+          <div class="flex justify-between items-center mb-2">
+            <label for="quality-slider" class="font-heading text-sm uppercase">WebP-Qualität</label>
+            <span id="quality-value" class="font-mono text-sm bg-[#000000] text-[#00ff00] px-2 py-0.5">85%</span>
+          </div>
+          <input
+            id="quality-slider"
+            type="range"
+            min="1"
+            max="100"
+            value="85"
+            class="w-full h-4 bg-[#c0c0c0] border-2 border-black appearance-none cursor-pointer"
+          />
+        </div>
+
+        <!-- Options Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <label class="flex items-center gap-2 bg-white p-2 border-2 border-black cursor-pointer">
+            <input type="checkbox" id="lossless-check" class="w-4 h-4" />
+            <span class="font-bold text-sm">Lossless WebP</span>
+          </label>
+          <label class="flex items-center gap-2 bg-white p-2 border-2 border-black cursor-pointer">
+            <input type="checkbox" id="strip-meta-check" checked class="w-4 h-4" />
+            <span class="font-bold text-sm">EXIF-/Metadaten entfernen</span>
+          </label>
+        </div>
+
+        <!-- Resize -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 bg-white p-3 border-2 border-black">
+          <div class="col-span-full font-heading text-sm uppercase mb-1">Maximale Abmessungen (optional)</div>
+          <div>
+            <label for="max-width" class="block text-xs font-bold mb-1">Breite (px)</label>
+            <input id="max-width" type="number" min="1" placeholder="z.B. 1920" class="w-full inset-input px-2 py-1 text-sm" />
+          </div>
+          <div>
+            <label for="max-height" class="block text-xs font-bold mb-1">Höhe (px)</label>
+            <input id="max-height" type="number" min="1" placeholder="z.B. 1080" class="w-full inset-input px-2 py-1 text-sm" />
+          </div>
+          <div class="col-span-2 flex items-end">
+            <span class="text-xs font-mono text-[#808080]">Seitenverhältnis wird automatisch beibehalten.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Convert Button -->
+    <div class="text-center mb-8">
+      <button
+        id="convert-btn"
+        type="button"
+        disabled
+        class="bevel-button-success font-heading text-lg uppercase tracking-wide px-8 py-3 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        Jetzt in WebP konvertieren
+      </button>
+    </div>
+
+    <!-- Overall Progress -->
+    <section id="progress-section" class="window-panel mb-6 hidden">
+      <div class="title-bar px-3 py-1 flex justify-between items-center">
+        <span class="font-heading text-sm text-white">FORTSCHRITT</span>
+        <span id="progress-text" class="font-mono text-xs text-white">0 von 0 Bildern konvertiert</span>
+      </div>
+      <div class="p-3 bg-[#c0c0c0]">
+        <div class="w-full h-6 bg-white border-2 border-black inset-panel p-0.5">
+          <div id="progress-bar" class="h-full bg-[#000080] w-0 transition-none"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hit Counter Stats -->
+    <section id="stats-section" class="hit-counter mb-6 hidden">
+      <div class="bg-[#000000] text-[#00ff00] font-mono text-xs p-2 border-2 border-black inset-panel">
+        <span>Visitors:</span>
+        <span id="visitor-counter">0000001</span>
+        <span class="mx-2">|</span>
+        <span>Ersparnis gesamt:</span>
+        <span id="total-savings">0%</span>
+        <span class="mx-2">|</span>
+        <span>Dateien:</span>
+        <span id="total-files">0</span>
+      </div>
+    </section>
+
+    <!-- Results Section -->
+    <section id="results-section" class="window-panel mb-6 hidden">
+      <div class="title-bar px-3 py-1 flex justify-between items-center">
+        <span class="font-heading text-sm text-white">ERGEBNISSE</span>
+        <button id="download-all-btn" type="button" class="bevel-button-sm text-xs uppercase px-2 py-1">Alle WebP herunterladen</button>
+      </div>
+      <div id="results-grid" class="p-3 bg-[#c0c0c0] space-y-3"></div>
+    </section>
+
+    <!-- Construction Stripe CTA -->
+    <section class="construction-stripe p-4 border-4 border-black text-center my-8">
+      <h2 class="font-heading text-2xl uppercase text-black drop-shadow-hard mb-2">Mehr coole Tools?</h2>
+      <p class="font-bold text-sm mb-2">Bald auch: PNG-Compressor, SVG-Optimizer, Favicon-Generator</p>
+      <div class="inline-block bg-[#ff0000] text-white font-heading text-xs uppercase px-3 py-1 border-2 border-black animate-pulse-glow">
+        UNDER CONSTRUCTION
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center py-4 border-t-4 border-[#808080]">
+      <p class="font-mono text-xs text-[#808080]">
+        © 1997-2025 Photo to WebP Converter |
+        <a href="#" class="text-[#0000ff] underline hover:text-[#ff0000]">Impressum</a> |
+        <a href="#" class="text-[#0000ff] underline hover:text-[#ff0000]">Datenschutz</a>
+      </p>
+    </footer>
+
+  </main>
+
+  <!-- Templates -->
+  <template id="file-item-template">
+    <div class="file-item flex items-center gap-3 p-2 bg-[#e8e8e8] border-2 border-[#808080]" data-id="">
+      <img class="preview-thumb w-16 h-16 object-cover border-2 border-black bg-white" src="" alt="" />
+      <div class="flex-1 min-w-0">
+        <div class="file-name font-bold text-sm truncate"></div>
+        <div class="file-meta font-mono text-xs text-[#808080]"></div>
+        <div class="file-status font-mono text-xs mt-1"></div>
+      </div>
+      <button type="button" class="remove-btn bevel-button-danger-sm text-xs uppercase px-2 py-1">Entfernen</button>
+    </div>
+  </template>
+
+  <template id="result-card-template">
+    <div class="result-card bg-white border-2 border-black p-3">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div class="md:col-span-1">
+          <div class="font-heading text-sm uppercase mb-1">Vorschau</div>
+          <img class="result-preview w-full h-40 object-contain border-2 border-black bg-[#c0c0c0]" src="" alt="" />
+        </div>
+        <div class="md:col-span-2 space-y-2">
+          <div class="font-bold text-sm truncate result-name"></div>
+          <table class="w-full text-xs font-mono border-collapse">
+            <tr class="border-b-2 border-[#808080]">
+              <td class="py-1">Original</td>
+              <td class="py-1 text-right result-original-size"></td>
+            </tr>
+            <tr class="border-b-2 border-[#808080]">
+              <td class="py-1">WebP</td>
+              <td class="py-1 text-right result-webp-size"></td>
+            </tr>
+            <tr class="bg-[#00ff00] text-black font-bold">
+              <td class="py-1">Ersparnis</td>
+              <td class="py-1 text-right result-savings"></td>
+            </tr>
+          </table>
+          <div class="flex gap-2 mt-2">
+            <button type="button" class="download-btn bevel-button-success text-xs uppercase px-3 py-1">WebP herunterladen</button>
+            <span class="result-status font-mono text-xs self-center"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <!-- App Scripts -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

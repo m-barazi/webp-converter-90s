@@ -1,0 +1,443 @@
+/* 90s / Windows 95 Design System */
+
+:root {
+  --win95-bg: #C0C0C0;
+  --win95-fg: #000000;
+  --win95-muted: #808080;
+  --win95-accent: #0000FF;
+  --win95-secondary: #FF0000;
+  --win95-tertiary: #FFFF00;
+  --win95-success: #00FF00;
+  --win95-success-dark: #00AA00;
+  --win95-border: #000000;
+  --win95-border-light: #FFFFFF;
+  --win95-border-dark: #808080;
+  --win95-title-bar: #000080;
+  --win95-title-bar-end: #1084D0;
+  --win95-panel-yellow: #FFFFCC;
+  --win95-visited: #800080;
+  --win95-hover: #FF0000;
+  --win95-dark-shadow: #404040;
+  --win95-light-shadow: #DFDFDF;
+}
+
+/* 90s Tiled Background */
+.bg-90s-tile {
+  background-color: #c0c0c0;
+  background-image:
+    linear-gradient(45deg, #b8b8b8 25%, transparent 25%),
+    linear-gradient(-45deg, #b8b8b8 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #b8b8b8 75%),
+    linear-gradient(-45deg, transparent 75%, #b8b8b8 75%);
+  background-size: 4px 4px;
+  background-position: 0 0, 0 2px, 2px -2px, -2px 0px;
+}
+
+/* Outset Bevel */
+.bevel-outset {
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  box-shadow: inset -1px -1px 0 #404040, inset 1px 1px 0 #dfdfdf;
+}
+
+/* Inset Bevel */
+.bevel-inset {
+  border: 2px solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+  box-shadow: inset 1px 1px 0 #404040, inset -1px -1px 0 #dfdfdf;
+}
+
+/* Window Panel */
+.window-panel {
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  box-shadow: inset -1px -1px 0 #404040, inset 1px 1px 0 #dfdfdf;
+  background-color: #c0c0c0;
+}
+
+.title-bar {
+  background: linear-gradient(to right, #000080, #1084d0);
+}
+
+.inset-panel {
+  border: 2px solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+  box-shadow: inset 1px 1px 0 #404040, inset -1px -1px 0 #dfdfdf;
+}
+
+/* Buttons */
+.bevel-button {
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  box-shadow: inset -1px -1px 0 #404040, inset 1px 1px 0 #dfdfdf;
+  background-color: #c0c0c0;
+  color: #000000;
+  font-weight: 700;
+  transition: none;
+}
+
+.bevel-button:hover {
+  background-color: #d0d0d0;
+}
+
+.bevel-button:active,
+.bevel-button.active {
+  border-color: #808080 #ffffff #ffffff #808080;
+  box-shadow: inset 1px 1px 0 #404040, inset -1px -1px 0 #dfdfdf;
+  transform: translate(1px, 1px);
+}
+
+.bevel-button:focus-visible {
+  outline: 2px dotted #000000;
+  outline-offset: 2px;
+}
+
+/* Success Button */
+.bevel-button-success {
+  border: 2px solid;
+  border-color: #00ff00 #006600 #006600 #00ff00;
+  box-shadow: inset -1px -1px 0 #004400, inset 1px 1px 0 #88ff88;
+  background-color: #00aa00;
+  color: #ffffff;
+  font-weight: 700;
+  transition: none;
+}
+
+.bevel-button-success:hover {
+  background-color: #00cc00;
+}
+
+.bevel-button-success:active,
+.bevel-button-success.active {
+  border-color: #006600 #00ff00 #00ff00 #006600;
+  box-shadow: inset 1px 1px 0 #004400, inset -1px -1px 0 #88ff88;
+  transform: translate(1px, 1px);
+}
+
+.bevel-button-success:focus-visible {
+  outline: 2px dotted #000000;
+  outline-offset: 2px;
+}
+
+/* Small Buttons */
+.bevel-button-sm {
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  box-shadow: inset -1px -1px 0 #404040, inset 1px 1px 0 #dfdfdf;
+  background-color: #c0c0c0;
+  color: #000000;
+  font-weight: 700;
+  transition: none;
+}
+
+.bevel-button-sm:hover {
+  background-color: #d0d0d0;
+}
+
+.bevel-button-sm:active {
+  border-color: #808080 #ffffff #ffffff #808080;
+  box-shadow: inset 1px 1px 0 #404040, inset -1px -1px 0 #dfdfdf;
+  transform: translate(1px, 1px);
+}
+
+.bevel-button-sm:focus-visible {
+  outline: 2px dotted #000000;
+  outline-offset: 2px;
+}
+
+/* Danger Small Button */
+.bevel-button-danger-sm {
+  border: 2px solid;
+  border-color: #ff5555 #800000 #800000 #ff5555;
+  box-shadow: inset -1px -1px 0 #500000, inset 1px 1px 0 #ffaaaa;
+  background-color: #ff0000;
+  color: #ffffff;
+  font-weight: 700;
+  transition: none;
+}
+
+.bevel-button-danger-sm:hover {
+  background-color: #ff3333;
+}
+
+.bevel-button-danger-sm:active {
+  border-color: #800000 #ff5555 #ff5555 #800000;
+  box-shadow: inset 1px 1px 0 #500000, inset -1px -1px 0 #ffaaaa;
+  transform: translate(1px, 1px);
+}
+
+.bevel-button-danger-sm:focus-visible {
+  outline: 2px dotted #000000;
+  outline-offset: 2px;
+}
+
+/* Inputs */
+.inset-input {
+  border: 2px solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+  box-shadow: inset 1px 1px 0 #404040, inset -1px -1px 0 #dfdfdf;
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.inset-input::placeholder {
+  color: #808080;
+}
+
+.inset-input:focus-visible {
+  outline: 2px dotted #000000;
+  outline-offset: 2px;
+}
+
+/* Drop Zone */
+.drop-zone {
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  box-shadow: inset -1px -1px 0 #404040, inset 1px 1px 0 #dfdfdf;
+  background-color: #ffffcc;
+}
+
+.drop-zone.drag-over {
+  border-color: #808080 #ffffff #ffffff #808080;
+  box-shadow: inset 1px 1px 0 #404040, inset -1px -1px 0 #dfdfdf;
+  background-color: #ffff00;
+}
+
+.drop-zone:focus-visible {
+  outline: 2px dotted #000000;
+  outline-offset: 2px;
+}
+
+/* Range Slider */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: #c0c0c0;
+  border: 2px solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+  box-shadow: inset 1px 1px 0 #404040, inset -1px -1px 0 #dfdfdf;
+  height: 1rem;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 24px;
+  background-color: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  box-shadow: inset -1px -1px 0 #404040, inset 1px 1px 0 #dfdfdf;
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 24px;
+  background-color: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  box-shadow: inset -1px -1px 0 #404040, inset 1px 1px 0 #dfdfdf;
+  cursor: pointer;
+}
+
+/* Checkboxes */
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 1rem;
+  height: 1rem;
+  background-color: #ffffff;
+  border: 2px solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+  box-shadow: inset 1px 1px 0 #404040, inset -1px -1px 0 #dfdfdf;
+  display: grid;
+  place-content: center;
+}
+
+input[type="checkbox"]::before {
+  content: "✓";
+  font-size: 12px;
+  color: #000000;
+  transform: scale(0);
+  transition: none;
+}
+
+input[type="checkbox"]:checked::before {
+  transform: scale(1);
+}
+
+input[type="checkbox"]:focus-visible {
+  outline: 2px dotted #000000;
+  outline-offset: 2px;
+}
+
+/* Marquee */
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.marquee {
+  display: inline-block;
+  animation: marquee-scroll 20s linear infinite;
+}
+
+/* Rainbow Text */
+@keyframes rainbow {
+  0% { color: #ff0000; }
+  17% { color: #ff8000; }
+  33% { color: #ffff00; }
+  50% { color: #00ff00; }
+  67% { color: #0080ff; }
+  83% { color: #8000ff; }
+  100% { color: #ff0000; }
+}
+
+.text-rainbow {
+  animation: rainbow 4s linear infinite;
+}
+
+/* Pulse Glow */
+@keyframes pulse-glow {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px 2px rgba(255, 0, 0, 0.5);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 1.5s ease-in-out infinite;
+}
+
+/* Hard Drop Shadow for Headings */
+.drop-shadow-hard {
+  text-shadow: 2px 2px 0 #808080;
+}
+
+/* Construction Stripes */
+.construction-stripe {
+  background: repeating-linear-gradient(
+    45deg,
+    #ffff00,
+    #ffff00 10px,
+    #000000 10px,
+    #000000 20px
+  );
+}
+
+/* Hit Counter */
+.hit-counter {
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  box-shadow: inset -1px -1px 0 #404040, inset 1px 1px 0 #dfdfdf;
+  background-color: #c0c0c0;
+  padding: 4px;
+}
+
+/* Groove HR */
+.hr-groove {
+  border: none;
+  height: 4px;
+  background: linear-gradient(
+    to bottom,
+    #808080 0%, #808080 50%,
+    #ffffff 50%, #ffffff 100%
+  );
+}
+
+/* Scrollbar (WebKit) - 90s style */
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+
+::-webkit-scrollbar-track {
+  background: #dfdfdf;
+  border: 2px solid #808080;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  box-shadow: inset -1px -1px 0 #404040, inset 1px 1px 0 #dfdfdf;
+}
+
+::-webkit-scrollbar-thumb:active {
+  border-color: #808080 #ffffff #ffffff #808080;
+  box-shadow: inset 1px 1px 0 #404040, inset -1px -1px 0 #dfdfdf;
+}
+
+::-webkit-scrollbar-button {
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  height: 16px;
+}
+
+/* Selection */
+::selection {
+  background-color: #000080;
+  color: #ffffff;
+}
+
+/* Links */
+a {
+  color: #0000ff;
+  text-decoration: underline;
+}
+
+a:hover {
+  color: #ff0000;
+}
+
+a:visited {
+  color: #800080;
+}
+
+a:active {
+  color: #ff0000;
+}
+
+/* Focus globally */
+:focus-visible {
+  outline: 2px dotted #000000;
+  outline-offset: 2px;
+}
+
+/* No border-radius anywhere */
+*, *::before, *::after {
+  border-radius: 0 !important;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    animation: none;
+  }
+
+  .text-rainbow {
+    animation: none;
+    color: #ff0000;
+  }
+
+  .animate-pulse-glow {
+    animation: none;
+  }
+
+  .bevel-button,
+  .bevel-button-success,
+  .bevel-button-sm,
+  .bevel-button-danger-sm {
+    transition: none;
+  }
+}

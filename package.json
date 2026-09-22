@@ -1,0 +1,11 @@
+{
+  "name": "photo-to-webp-converter",
+  "version": "1.0.0",
+  "description": "100% client-side image to WebP converter with 90s Windows 95 design.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "check": "node --check js/utils.js && node --check js/converter.js && node --check js/ui.js && node --check js/app.js",
+    "serve": "python -m http.server 8080"
+  }
+}
