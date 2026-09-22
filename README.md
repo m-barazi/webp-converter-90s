@@ -71,8 +71,48 @@ photo-to-webp-converter/
 │   ├── converter.js # Decode + WebP encode engine
 │   ├── ui.js        # DOM rendering & progress updates
 │   └── utils.js     # Helpers for bytes, formats, downloads
+├── Dockerfile       # nginx-based production image
+├── docker-compose.yml
+├── nginx.conf       # nginx configuration with gzip + SPA fallback
 ├── README.md
 └── package.json     # Minimal metadata + syntax-check script
+```
+
+## 🐳 Deployment with Docker
+
+The app is served by a lightweight **nginx** container. No build step is needed because the app is already static.
+
+### Build and run with Docker Compose
+
+```bash
+cd photo-to-webp-converter
+docker compose up --build -d
+```
+
+The container uses **Traefik** labels and expects an external network called `traefik-public`. Adjust the hostname `webp.barazi.cloud` in `docker-compose.yml` to your own domain.
+
+### Without Traefik (plain port mapping)
+
+Uncomment the `ports` section in `docker-compose.yml`:
+
+```yaml
+ports:
+  - "8080:80"
+```
+
+Then run:
+
+```bash
+docker compose up --build -d
+```
+
+The app is available at `http://localhost:8080`.
+
+### Build manually
+
+```bash
+docker build -t webp-converter-90s .
+docker run -p 8080:80 webp-converter-90s
 ```
 
 ## 🧑‍💻 Local Development

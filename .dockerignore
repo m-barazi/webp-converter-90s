@@ -1,0 +1,12 @@
+.git
+.gitignore
+server.log
+README.md
+CLAUDE.md
+.claude
+node_modules
+Dockerfile
+docker-compose.yml
+.dockerignore
+package.json
+package-lock.json
