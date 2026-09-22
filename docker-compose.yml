@@ -4,21 +4,12 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: webp-converter-90s
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.webpconverter.rule=Host(`webp.barazi.cloud`)"
-      - "traefik.http.routers.webpconverter.entrypoints=websecure"
-      - "traefik.http.routers.webpconverter.tls=true"
-      - "traefik.http.routers.webpconverter.tls.certresolver=letsencrypt"
-      - "traefik.http.services.webpconverter.loadbalancer.server.port=80"
-    networks:
-      - traefik-public
+    ports:
+      - "8080:80"
     restart: unless-stopped
-
-    # Alternative ohne Traefik — einfach Port-Mapping:
-    # ports:
-    #   - "8080:80"
+    networks:
+      - webp-converter-net
 
 networks:
-  traefik-public:
-    external: true
+  webp-converter-net:
+    driver: bridge

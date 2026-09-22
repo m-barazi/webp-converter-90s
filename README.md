@@ -63,50 +63,54 @@ All images are processed **locally in your browser**. Nothing is uploaded to any
 
 ```
 photo-to-webp-converter/
-├── index.html       # App shell, CDN links, HTML templates
+├── index.html                  # App shell, CDN links, HTML templates
 ├── css/
-│   └── 90s.css      # 90s/Windows 95 design system
+│   └── 90s.css                 # 90s/Windows 95 design system
 ├── js/
-│   ├── app.js       # State, event wiring, coordination
-│   ├── converter.js # Decode + WebP encode engine
-│   ├── ui.js        # DOM rendering & progress updates
-│   └── utils.js     # Helpers for bytes, formats, downloads
-├── Dockerfile       # nginx-based production image
-├── docker-compose.yml
-├── nginx.conf       # nginx configuration with gzip + SPA fallback
+│   ├── app.js                  # State, event wiring, coordination
+│   ├── converter.js            # Decode + WebP encode engine
+│   ├── ui.js                   # DOM rendering & progress updates
+│   └── utils.js                # Helpers for bytes, formats, downloads
+├── Dockerfile                  # nginx-based production image
+├── docker-compose.yml          # Standard deploy (port 8080)
+├── docker-compose.traefik.yml  # Alternative deploy behind Traefik
+├── nginx.conf                  # nginx configuration with gzip + SPA fallback
+├── deploy.sh                   # One-command Hostinger VPS deploy script
 ├── README.md
-└── package.json     # Minimal metadata + syntax-check script
+└── package.json                # Minimal metadata + syntax-check script
 ```
 
 ## 🐳 Deployment with Docker
 
 The app is served by a lightweight **nginx** container. No build step is needed because the app is already static.
 
-### Build and run with Docker Compose
+### One-command deploy on a VPS (e.g. Hostinger KVM)
+
+Run this on your server as a normal user with `sudo` access:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/m-barazi/webp-converter-90s/main/deploy.sh | bash
+```
+
+The script installs Docker if missing, clones or updates the repo, builds the image, and starts the container on port `8080`.
+
+### Build and run with Docker Compose (port 8080)
 
 ```bash
 cd photo-to-webp-converter
 docker compose up --build -d
 ```
 
-The container uses **Traefik** labels and expects an external network called `traefik-public`. Adjust the hostname `webp.barazi.cloud` in `docker-compose.yml` to your own domain.
+The app is available at `http://<server-ip>:8080`.
 
-### Without Traefik (plain port mapping)
+### Deploy behind existing Traefik
 
-Uncomment the `ports` section in `docker-compose.yml`:
-
-```yaml
-ports:
-  - "8080:80"
-```
-
-Then run:
+If your server already runs Traefik with a `traefik-public` network and a Let's Encrypt resolver, edit `docker-compose.traefik.yml` and replace `webp.barazi.cloud` with your domain, then run:
 
 ```bash
-docker compose up --build -d
+cd photo-to-webp-converter
+docker compose -f docker-compose.traefik.yml up --build -d
 ```
-
-The app is available at `http://localhost:8080`.
 
 ### Build manually
 
