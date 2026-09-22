@@ -12,9 +12,10 @@ services:
       - "traefik.http.routers.webpconverter.tls.certresolver=letsencrypt"
       - "traefik.http.services.webpconverter.loadbalancer.server.port=80"
     networks:
-      - traefik-public
+      - proxy
     restart: unless-stopped
 
 networks:
-  traefik-public:
+  proxy:
     external: true
+    name: proxy
